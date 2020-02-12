@@ -4,6 +4,11 @@
 ```
 npm install
 ```
+### Set enviroment variable
+```
+VUE_APP_BACKEND_URL=https://track-records.herokuapp.com/api
+```
+You can also add it to .env in the root of the project
 
 ### Compiles and hot-reloads for development
 ```
