@@ -15,7 +15,7 @@
         <span>{{ data.value.name }}</span>
       </template>
       <template v-slot:cell(release_date)="data">
-        <span>{{ data.value | moment("LL") }}</span>
+        <span v-if="data.value">{{ data.value | moment("LL") }}</span>
       </template>
       <template v-slot:cell(duration)="data">
         <span>{{ $moment.utc(data.value * 1000) | moment("HH:mm:ss") }}</span>

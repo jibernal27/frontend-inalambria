@@ -1,11 +1,9 @@
 <template>
-  <b-row>
+  <b-row class="justify-content-center">
     <b-col cols="12">
       <h1 class="text-center">Busqueda de canciones</h1>
     </b-col>
-    <b-col cols="12">
-      <search-track />
-    </b-col>
+    <search-track />
   </b-row>
 </template>
 
