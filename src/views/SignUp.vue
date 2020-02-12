@@ -15,6 +15,7 @@
             v-model="form.username"
             type="text"
             required
+            minlength="6"
             placeholder="Escribe un nombre de usuario"
             name="username"
           ></b-form-input>
@@ -25,6 +26,7 @@
             v-model="form.password"
             type="password"
             required
+            minlength="8"
             placeholder="Contrasena"
           ></b-form-input>
         </b-form-group>
@@ -38,6 +40,7 @@
             v-model="form.paswordConfirm"
             type="password"
             required
+            minlength="8"
             placeholder="Contrasena"
           ></b-form-input>
         </b-form-group>

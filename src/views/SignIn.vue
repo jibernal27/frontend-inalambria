@@ -14,6 +14,7 @@
             id="input-1"
             v-model="form.username"
             type="text"
+            minlength="6"
             required
             placeholder="Escribe un nombre de usuario"
             name="username"
@@ -24,6 +25,7 @@
             id="input-2"
             v-model="form.password"
             required
+            minlength="8"
             type="password"
             placeholder="Contrasena"
           ></b-form-input>
