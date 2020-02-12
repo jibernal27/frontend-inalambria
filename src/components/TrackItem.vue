@@ -9,7 +9,7 @@
       <b-col cols="12">
         <b-img :src="imageUrl" fluid :alt="track.title" />
       </b-col>
-      <b-col cols="12">
+      <b-col cols="12" v-id="isAuth">
         <b-button-group>
           <b-button @click="addPlaylist">
             Agregar a Playlist
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   props: {
     track: {
@@ -29,12 +31,18 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({ isAuth: 'isAuth' }),
     imageUrl() {
       const { album } = this.track
       if (album) {
         return album.cover
       }
       return null
+    }
+  },
+  methods: {
+    addPlaylist() {
+      this.$root.$emit('add-track-to-playlist', { track: this.track })
     }
   }
 }

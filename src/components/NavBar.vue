@@ -5,10 +5,10 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item to="playlists">Mis PlayLists</b-nav-item>
+          <b-nav-item v-if="isAuth" to="/playlists">Mis PlayLists</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto" v-if="isAuth">
-          <b-nav-item to="playlists">{{ profile.username }} </b-nav-item>
+          <b-nav-item to="/playlists">{{ profile.username }} </b-nav-item>
           <b-nav-item to="logout">
             Cerrar sesion
           </b-nav-item>

@@ -31,29 +31,59 @@
       </div>
     </div>
     <!--end of col-->
+    <b-col cols="12" v-if="!isAuth">
+      <h4>
+        Para poder guardar canciones
+        <router-link to="/signup"> registrate</router-link> o
+        <router-link to="/signin"> ingresa</router-link>
+      </h4>
+    </b-col>
+
     <b-col cols="12">
       <b-row>
-        <track-item v-for="t in tracks" :track="t" :key="t.id" />
+        <b-spinner v-if="loading" label="Cargando..."></b-spinner>
+        <tracks-table
+          v-else-if="searched"
+          :items="tracks"
+          emptyMessage="No se han encontrado resultados!"
+        >
+          <template v-slot:actions="data">
+            <b-button-group>
+              <b-button @click="addPlaylist(data.data)">
+                Agregar a Playlist
+              </b-button>
+            </b-button-group>
+          </template>
+        </tracks-table>
       </b-row>
     </b-col>
+    <play-list-selector />
   </div>
 </template>
 
 <script>
 import api from '@/services/api'
-import TrackItem from '@/components/TrackItem'
+import PlayListSelector from '@/components/PlayListSelector'
+import { mapGetters } from 'vuex'
+import TracksTable from '@/components/TracksTable'
+
 
 export default {
   components: {
-    TrackItem
+    PlayListSelector,
+    TracksTable
   },
   data() {
     return {
       query: "",
       loading: false,
       page: 1,
-      tracks: []
+      tracks: [],
+      searched: false
     }
+  },
+  computed: {
+    ...mapGetters({ isAuth: 'isAuth' }),
   },
   methods: {
     async loadTracks() {
@@ -62,12 +92,16 @@ export default {
       }
       this.loading = true
       const { data: { data } } = await api.playlist.findTracks(this.query, this.page)
+      this.searched = true
       this.tracks = data
       this.loading = false
     },
     async changePage(page) {
       this.page = page
       await this.loadTracks()
+    },
+    addPlaylist(track) {
+      this.$root.$emit('add-track-to-playlist', { track })
     }
   }
 }

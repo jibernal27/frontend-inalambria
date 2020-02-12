@@ -6,11 +6,26 @@ import axios from '@/services/client'
 Vue.use(Vuex)
 
 const state = {
-  user: null
+  user: null,
+  playlist: []
 }
 const mutations = {
   SET_PROFILE(state, profile) {
     state.user = profile
+  },
+  SET_PLAY_LIST(state, playlist) {
+    state.playlist = playlist
+  },
+  ADD_PLAYLIST(state, playlist) {
+    state.playlist = [...state.playlist, playlist]
+  },
+  DELETE_PLAYLIST(state, playlist) {
+    const playlistsState = state.playlist
+    const index = playlistsState.indexOf(playlist)
+    if (index > -1) {
+      playlistsState.splice(index, 1)
+    }
+    state.playlist = playlistsState
   }
 }
 const actions = {
@@ -31,8 +46,11 @@ const actions = {
     }
     return response
   },
-  async loadData(context) {
-    // Load playlist
+  async loadData({ commit }) {
+    const { success, data } = await api.playlist.listPlayList()
+    if (success) {
+      commit('SET_PLAY_LIST', data)
+    }
   },
   async checkToken({ commit, dispatch }) {
     const token = localStorage.getItem('token')
@@ -56,7 +74,8 @@ const actions = {
 }
 const getters = {
   isAuth: ({ user }) => !!user,
-  profile: ({ user }) => user
+  profile: ({ user }) => user,
+  playlists: ({ playlist }) => playlist
 }
 export default new Vuex.Store({
   state,

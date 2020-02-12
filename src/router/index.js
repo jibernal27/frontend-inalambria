@@ -5,6 +5,7 @@ import SignIn from '../views/SignIn'
 import SignUp from '../views/SignUp'
 import Logout from '../views/Logout'
 import PlayLists from '../views/PlayLists'
+import PlayListDetail from '../views/PlayListDetail'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/playlists',
     name: 'playlists',
     component: PlayLists
+  },
+  {
+    path: '/playlists/:id',
+    name: 'playlistDetail',
+    component: PlayListDetail
   }
 ]
 
